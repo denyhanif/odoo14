@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="mahasiswa_kanban_view" model="ir.ui.view">
+        <field name="name">mahasiswa.kanban</field>
+        <field name="model">mahasiswa</field>
+        <field name="arch" type="xml">
+            <kanban >
+				<field name="id"/>
+				<field name="image"/>
+                <field name="code"/>
+				<field name="name"/>
+				<field name="tgl_masuk"/>
+				<templates>
+					<t t-name="kanban-box">
+						<div t-attf-class="oe_kanban_global_click">
+							<div clas="o_kanban_image" >
+								<img t-att-src="kanban_image('mahasiswa','image',record.id.raw_value)"></img>
+							</div>
+							<div clas="oe_kanban_details">
+								<div>
+									<field name="name"/>
+								</div>
+								<div>
+									<field name="code"/>
+								</div>
+								<div>
+									<field name="tgl_masuk"/>
+								</div>
+							</div>
+						</div>
+					</t>
+				</templates>
+
+            </kanban>
+        </field>
+    </record>
+
+	<record id="mahasiswa_calendar_view" model="ir.ui.view">
+        <field name="name">mahasiswa.calendar</field>
+        <field name="model">mahasiswa</field>
+        <field name="arch" type="xml">
+            <calendar string="Jadwal Sidang Mahasiswa" date_start="tgl_masuk" date_stop="tgl_masuk">
+                <field name="code"/>
+				<field name="name"/>
+
+            </calendar>
+        </field>
+    </record>
+
+	<record id="mahasiswa_search_view" model="ir.ui.view">
+        <field name="name">mahasiswa.search</field>
+        <field name="model">mahasiswa</field>
+        <field name="arch" type="xml">
+            <search string="mahasiswa">
+                <field name="code"/>
+				<field name="name"/>
+				<group expand="0" string="Group BY">
+					<filter name="tgl_masuk" context="{'group_by':'tgl_masuk'}"/>
+				</group>
+            </search>
+        </field>
+    </record>
+    <record id="mahasiswa_tree_view" model="ir.ui.view">
+        <field name="name">mahasiswa.tree</field>
+        <field name="model">mahasiswa</field>
+        <field name="arch" type="xml">
+            <tree string="mahasiswa">
+                <field name="code"/>
+				<field name="name"/>
+				<field name="tgl_masuk"/>
+            </tree>
+        </field>
+    </record>
+    <record id="mahasiswa_form_view" model="ir.ui.view">
+		<field name = "name">mahasiswa.form</field>
+		<field name = "model">mahasiswa</field>
+		<field name = "arch" type="xml">
+			<form string="Mahasiswa">
+				<header>
+					<button string="success" type="objecjt" name="button_success" class="oe_highlight"/>
+					<button string="fail" type="objecjt" name="button_fail" class="oe_highlight"/>
+
+
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="image" widget="image" nolabel="1"/>
+							<field name="name"/>
+							<field name="code"/>
+							<field name="tgl_masuk"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="action_mahasiswa" model="ir.actions.act_window">
+		<field name="name">Formulir mahasiswa</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">mahasiswa</field>
+		<field name="view_mode">tree,form,calendar,kanban</field>
+		<field name="context">{}</field>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Input data mhs Here!
+			</p>
+		</field>
+	</record>
+
+	<menuitem	id="kampus_app_root_menu"
+				name="kampus"
+				web_icon="my_app,static/description/icon.png"
+				sequence="7"/>
+
+	<menuitem	id="mahasiswa_menu"
+				name="mahasiswa" action="action_mahasiswa"
+				parent="kampus_app_root_menu"
+				sequence="10"/>
+</odoo>
